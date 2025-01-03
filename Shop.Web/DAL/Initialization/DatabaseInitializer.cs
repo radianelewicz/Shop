@@ -26,14 +26,23 @@ internal static class DatabaseInitializer
                 {
                     new ShopOrder()
                     {
-                        City = "Warszawa",
-                        Quantity = 2,
-                        BruttoCost = 123,
-                        NettoCost = 126,
+                        ClientAddress = new ClientAddress()
+                        {
+                            PostalCode = "11-111",
+                            Street = "Ulica w Gdańsku",
+                            City = "Warszawa",
+                        },
+                        Orders = new List<Order>()
+                        {
+                            new Order()
+                            {
+                                Quantity = 2,
+                                BruttoCost = 123,
+                                NettoCost = 126,
+                                ProductCode = "ABC",
+                            }
+                        },
                         PaymentType = PaymentType.Cash,
-                        PostalCode = "11-111",
-                        ProductCode = "ABC",
-                        Street = "Ulica w Gdańsku"
                     }
                 }
             },
@@ -44,25 +53,43 @@ internal static class DatabaseInitializer
                 {
                     new ShopOrder()
                     {
-                        City = "Warszawa",
-                        Quantity = 2,
-                        BruttoCost = 123,
-                        NettoCost = 126,
-                        PaymentType = PaymentType.Card,
-                        PostalCode = "12-345",
-                        ProductCode = "ABC",
-                        Street = "Aleja Jerozolimska"
+                        ClientAddress = new ClientAddress()
+                        {
+                            City = "Warszawa",
+                            Street = "Aleja Jerozolimska",
+                            PostalCode = "12-345",
+                        },
+                        Orders = new List<Order>()
+                        {
+                            new Order()
+                            {
+                                Quantity = 2,
+                                BruttoCost = 123,
+                                NettoCost = 126,
+                                ProductCode = "ABC",
+                            }
+                        },
+                        PaymentType = PaymentType.Card,                   
                     },
                     new ShopOrder()
                     {
-                        City = "Opole",
-                        Quantity = 2,
-                        BruttoCost = 123,
-                        NettoCost = 126,
+                        ClientAddress = new ClientAddress()
+                        {
+                                City = "Opole",
+                                PostalCode = "11-111",
+                                Street = "Ulica w Opolu"
+                        },
+                        Orders = new List<Order>()
+                        {
+                            new Order()
+                            {
+                                Quantity = 2,
+                                BruttoCost = 123,
+                                NettoCost = 126,
+                                ProductCode = "ABC",
+                            }
+                        },
                         PaymentType = PaymentType.Card,
-                        PostalCode = "11-111",
-                        ProductCode = "ABC",
-                        Street = "Ulica w Opolu"
                     }
                 }
             },
@@ -73,37 +100,51 @@ internal static class DatabaseInitializer
                 {
                     new ShopOrder()
                     {
-                        City = "Warszawa",
-                        Quantity = 10,
-                        BruttoCost = 12314,
-                        NettoCost = 51341,
+                        ClientAddress = new ClientAddress()
+                        {
+                                City = "Warszawa",
+                                PostalCode = "44-444",
+                                Street = "Aleja Jerozolimska"
+                        },
+                        Orders = new List<Order>()
+                        {
+                            new Order()
+                            {
+                                Quantity = 10,
+                                BruttoCost = 12314,
+                                NettoCost = 51341,
+                                ProductCode = "AAA",
+                            }
+                        },
                         PaymentType = PaymentType.Transfer,
-                        PostalCode = "44-444",
-                        ProductCode = "AAA",
-                        Street = "Aleja Jerozolimska"
                     },
                     new ShopOrder()
                     {
-                        City = "Białystok",
-                        Quantity = 2,
-                        BruttoCost = 431,
-                        NettoCost = 1561,
+                        ClientAddress = new ClientAddress()
+                        {
+                            City = "Białystok",
+                            PostalCode = "55-555",
+                            Street = "Choroszczańska"
+                        },
+                        Orders = new List<Order>()
+                        {
+                            new Order()
+                            {
+                                Quantity = 2,
+                                BruttoCost = 431,
+                                NettoCost = 1561,
+                                ProductCode = "Spodnie",
+                            },
+                            new Order()
+                            {
+                                Quantity = 1,
+                                BruttoCost = 100,
+                                NettoCost = 123,
+                                ProductCode = "Buty",
+                            }
+                        },
                         PaymentType = PaymentType.Cash,
-                        PostalCode = "55-555",
-                        ProductCode = "Spodnie",
-                        Street = "Choroszczańska"
                     },
-                    new ShopOrder()
-                    {
-                        City = "Wrocław",
-                        Quantity = 1,
-                        BruttoCost = 100,
-                        NettoCost = 123,
-                        PaymentType = PaymentType.Cash,
-                        PostalCode = "66-66",
-                        ProductCode = "Buty",
-                        Street = "Ulica we Wrocławiu"
-                    }
                 }
             }
         ]);

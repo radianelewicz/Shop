@@ -1,6 +1,6 @@
-﻿@model IEnumerable<CustomShop.Web.Models.EntityFramework.ShopOrdersByPaymentTypeViewModel>
+﻿@model IEnumerable<CustomShop.Web.Models.EntityFramework.OrdersByPaymentTypeViewModel>
 @{
-    CustomShop.Web.Models.EntityFramework.ShopOrderViewModel ShopOrderViewModel = null;
+    CustomShop.Web.Models.EntityFramework.OrderViewModel OrderViewModel = null;
     ViewData["Title"] = "EntityFramework Data Page";
 }
 
@@ -15,28 +15,19 @@
                 @Html.DisplayNameFor(x => x.PaymentType)
             </th>
             <th>
-                @Html.DisplayNameFor(x => ShopOrderViewModel.ShopOrderId)
+                @Html.DisplayNameFor(x => OrderViewModel.OrderId)
             </th>
             <th>
-                @Html.DisplayNameFor(x => ShopOrderViewModel.ProductCode)
+                @Html.DisplayNameFor(x => OrderViewModel.ProductCode)
             </th>
             <th>
-                @Html.DisplayNameFor(x => ShopOrderViewModel.NettoCost)
+                @Html.DisplayNameFor(x => OrderViewModel.NettoCost)
             </th>
             <th>
-                @Html.DisplayNameFor(x => ShopOrderViewModel.BruttoCost)
+                @Html.DisplayNameFor(x => OrderViewModel.BruttoCost)
             </th>
             <th>
-                @Html.DisplayNameFor(x => ShopOrderViewModel.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(x => ShopOrderViewModel.Street)
-            </th>
-            <th>
-                @Html.DisplayNameFor(x => ShopOrderViewModel.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(x => ShopOrderViewModel.PostalCode)
+                @Html.DisplayNameFor(x => OrderViewModel.Quantity)
             </th>
             <th></th>
         </tr>
@@ -48,34 +39,31 @@
                 <td>
                     @Html.DisplayFor(modelItem => groups.PaymentType)
                 </td>
-                @foreach (var shopOrder in groups.ShopOrders)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => shopOrder.ShopOrderId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => shopOrder.ProductCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => shopOrder.NettoCost)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => shopOrder.BruttoCost)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => shopOrder.Quantity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => shopOrder.Street)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => shopOrder.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => shopOrder.PostalCode)
-                    </td>
-                }
             </tr>
+
+            @foreach (var order in groups.Orders)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => string.Empty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => order.OrderId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => order.ProductCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => order.NettoCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => order.BruttoCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => order.Quantity)
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
