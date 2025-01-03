@@ -17,20 +17,16 @@ public class DalRepostiory : IDalRepostiory
         _connectionString = configuration.GetConnectionString("ShopsContext")!;
     }
 
-    public Task<IEnumerable<ShopOrderResponse>> GetAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<ShopOrderResponse>> GetAsync(CancellationToken cancellationToken)
     {
         using var sqlConnection = new SqlConnection(_connectionString);
         const string sql = @"
-SELECT so.City, SUM(so.Netto) AS [SumNetto]
-FROM dbo.Shop s
-FROM dbo.ShopOrder so
-WHERE s.ShopID % 2 = 0 AND so.City LIKE '%w%'
-GROUP BY so.City";
+SELECT so.[City], SUM(so.[NettoCost]) AS [SumNetto]
+FROM dbo.[Shop] s
+INNER JOIN dbo.ShopOrder so ON s.[ShopID] = so.[ShopID]
+WHERE s.[ShopID] % 2 = 0 AND so.[City] LIKE '%w%'
+GROUP BY so.[City]";
 
-        return sqlConnection.QueryAsync<ShopOrderResponse>(
-            new CommandDefinition(
-                sql,
-                sqlConnection.BeginTransaction(),
-                cancellationToken: cancellationToken));
+        return await sqlConnection.QueryAsync<ShopOrderResponse>(sql);
     }
 }

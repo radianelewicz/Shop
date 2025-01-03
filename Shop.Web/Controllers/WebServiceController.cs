@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Shops.Web.Services;
+﻿using CustomShop.Web.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Shops.Web.Controllers;
+namespace CustomShop.Web.Controllers;
 
 public class WebServiceController : Controller
 {
-    private readonly IShopsServiceApi _shopsServiceApi;
+    private readonly IWebShopService _webShopService;
 
-    public WebServiceController(IShopsServiceApi shopsServiceApi)
+    public WebServiceController(IWebShopService webShopService)
     {
-        _shopsServiceApi = shopsServiceApi;
+        _webShopService = webShopService;
     }
 
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
-        => View(await _shopsServiceApi.GetAsync(cancellationToken));
+        => View(await _webShopService.GetAsync(cancellationToken));
 }

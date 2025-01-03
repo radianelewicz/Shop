@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Shops.Web.DAL;
+﻿namespace CustomShop.Web.DAL.Models;
 
 public class ShopOrder
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public int ShopOrderID { get; set; }
     public string ProductCode { get; set; } = null!;
     public decimal NettoCost { get; set; }
@@ -13,8 +10,7 @@ public class ShopOrder
     public string Street { get; set; } = null!;
     public string City { get; set; } = null!;
     public string PostalCode { get; set; } = null!;
-    public PaymentTypeEnum PaymentType { get; set; }
-    [ForeignKey("Shop")]
+    public PaymentType PaymentType { get; set; }
     public int ShopID { get; set; }
-    public virtual Shop Shop { get; set; } = null!;
+    public Shop Shop { get; set; } = null!;
 }

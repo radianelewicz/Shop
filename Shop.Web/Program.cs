@@ -1,25 +1,18 @@
-using Microsoft.EntityFrameworkCore;
-using Shops.Web.DAL;
+using CustomShop.Web.DAL.Contexts;
+using CustomShop.Web.Services;
 using Shops.Web.DAL.DataInitialization;
-using Shops.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Services
-    .BuildServiceProvider()
-    .GetRequiredService<IConfiguration>()
-    .GetConnectionString("ShopsContext") ?? throw new ArgumentNullException("ShopsContext");
-
-builder.Services.AddDbContext<ShopsContext>(options => options.UseSqlServer(connectionString));
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IShopsServiceApi, ShopsServiceApi>();
+
+builder.Services.AddDbContext<ShopContext>();
+builder.Services.AddScoped<IWebShopService, WebShopService>();
 
 var app = builder.Build();
 
-DatabaseInitializer.Initialize(
-    app.Services.GetRequiredService<ShopsContext>());
+DatabaseInitializer.Initialize(builder.Configuration);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

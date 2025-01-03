@@ -1,20 +1,24 @@
-﻿namespace Shops.Web.DAL.DataInitialization;
+﻿using CustomShop.Web.DAL.Contexts;
+using CustomShop.Web.DAL.Models;
+
+namespace Shops.Web.DAL.DataInitialization;
 
 internal static class DatabaseInitializer
 {
-    internal static void Initialize(ShopsContext shopsContext)
+    internal static void Initialize(IConfiguration configuration)
     {
-        shopsContext.Database.EnsureCreated();
+        using var shopContext = new ShopContext(configuration);
+        shopContext.Database.EnsureCreated();
 
-        var shopDbSet = shopsContext.Set<Shop>();
+        var shopDbSet = shopContext.Set<Shop>();
 
         if (shopDbSet.Any())
         {
             return;
         }
 
-        shopsContext.Set<Shop>().AddRange(new Shop[]
-        {
+        shopContext.Set<Shop>().AddRange(
+        [
             new Shop()
             {
                 Name = "Sklep 1",
@@ -26,10 +30,10 @@ internal static class DatabaseInitializer
                         Quantity = 2,
                         BruttoCost = 123,
                         NettoCost = 126,
-                        PaymentType = PaymentTypeEnum.Cash,
+                        PaymentType = PaymentType.Cash,
                         PostalCode = "11-111",
                         ProductCode = "ABC",
-                        Street = "Aleja Jerozolimska"
+                        Street = "Ulica w Gdańsku"
                     }
                 }
             },
@@ -40,14 +44,14 @@ internal static class DatabaseInitializer
                 {
                     new ShopOrder()
                     {
-                        City = "Gdańsk",
+                        City = "Warszawa",
                         Quantity = 2,
                         BruttoCost = 123,
                         NettoCost = 126,
-                        PaymentType = PaymentTypeEnum.Card,
+                        PaymentType = PaymentType.Card,
                         PostalCode = "12-345",
                         ProductCode = "ABC",
-                        Street = "Ulica w Gdańsku"
+                        Street = "Aleja Jerozolimska"
                     },
                     new ShopOrder()
                     {
@@ -55,7 +59,7 @@ internal static class DatabaseInitializer
                         Quantity = 2,
                         BruttoCost = 123,
                         NettoCost = 126,
-                        PaymentType = PaymentTypeEnum.Card,
+                        PaymentType = PaymentType.Card,
                         PostalCode = "11-111",
                         ProductCode = "ABC",
                         Street = "Ulica w Opolu"
@@ -73,7 +77,7 @@ internal static class DatabaseInitializer
                         Quantity = 10,
                         BruttoCost = 12314,
                         NettoCost = 51341,
-                        PaymentType = PaymentTypeEnum.Transfer,
+                        PaymentType = PaymentType.Transfer,
                         PostalCode = "44-444",
                         ProductCode = "AAA",
                         Street = "Aleja Jerozolimska"
@@ -84,7 +88,7 @@ internal static class DatabaseInitializer
                         Quantity = 2,
                         BruttoCost = 431,
                         NettoCost = 1561,
-                        PaymentType = PaymentTypeEnum.Cash,
+                        PaymentType = PaymentType.Cash,
                         PostalCode = "55-555",
                         ProductCode = "Spodnie",
                         Street = "Choroszczańska"
@@ -95,15 +99,15 @@ internal static class DatabaseInitializer
                         Quantity = 1,
                         BruttoCost = 100,
                         NettoCost = 123,
-                        PaymentType = PaymentTypeEnum.Cash,
+                        PaymentType = PaymentType.Cash,
                         PostalCode = "66-66",
                         ProductCode = "Buty",
                         Street = "Ulica we Wrocławiu"
                     }
                 }
             }
-        });
+        ]);
 
-        shopsContext.SaveChanges();
+        shopContext.SaveChanges();
     }
 }

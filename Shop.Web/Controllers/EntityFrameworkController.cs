@@ -1,22 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CustomShop.Web.DAL.Contexts;
+using CustomShop.Web.Models.EntityFramework;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Shops.Web.DAL;
 
-namespace Shops.Web.Controllers;
+namespace CustomShop.Web.Controllers;
 
 public class EntityFrameworkController : Controller
 {
-    private readonly ShopsContext _shopsContext;
+    private readonly ShopContext _shopContext;
 
-    public EntityFrameworkController(ShopsContext shopsContet)
+    public EntityFrameworkController(ShopContext shopContet)
     {
-        _shopsContext = shopsContet;
+        _shopContext = shopContet;
     }
 
     public async Task<IActionResult> Index()
-        => View(
-            await _shopsContext.ShopOrder
+        => View((await _shopContext.ShopOrder
             .Where(x => x.BruttoCost > 150)
+            .ToListAsync())
             .GroupBy(x => x.PaymentType)
-            .ToListAsync());
+            .Select(x => new ShopOrdersByPaymentTypeViewModel(
+                x.Key,
+                x.Select(y => new ShopOrderViewModel(
+                    y.ShopOrderID,
+                    y.ProductCode,
+                    y.NettoCost,
+                    y.BruttoCost,
+                    y.Quantity,
+                    y.Street,
+                    y.City,
+                    y.PostalCode)))));
 }
